@@ -9,9 +9,12 @@ type Cell =
 
 type Board = Cell list list
 
-type GameState =
+type GameOver =
     | Winner of Player
     | Draw
+
+type GameState =
+    | GameOver of GameOver
     | Continue
 
 module List =
@@ -74,10 +77,10 @@ let checkForDraw (board: Board) =
 
 let getGameState board =
     if checkForWinner (Player PlayerX) board then
-        Winner PlayerX
+        GameOver (Winner PlayerX)
     else if checkForWinner (Player PlayerO) board then
-        Winner PlayerO
+        GameOver (Winner PlayerO)
     else if checkForDraw board then
-        Draw
+        GameOver Draw
     else
         Continue
