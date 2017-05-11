@@ -34,7 +34,6 @@ module State =
         { board = GameLogic.newBoard (3, 3)
           currentPlayer = PlayerX
           gameState = Continue }
-        //   gameState = GameOver (Winner PlayerX) }
 
     let nextPlayer = function
         | PlayerX -> PlayerO
@@ -55,11 +54,11 @@ module State =
         | Restart -> init ()
 
 module View =
-    let playerImage src className =
+    let player src className =
         img [ ClassName className; Src src ]
 
-    let playerX = playerImage playerXImage
-    let playerO = playerImage playerOImage
+    let playerX = player playerXImage
+    let playerO = player playerOImage
     let playerXM = playerX "PlayerX"
     let playerOM = playerO "PlayerO"
     let playerXS = playerX "PlayerX PlayerX--Small"
@@ -94,23 +93,26 @@ module View =
             [ board onMove board'
               currentPlayer currentPlayer' ]
 
+    let gameOverPlayer player =
+        span []
+            [ yield str "Player"
+              yield match player with
+                    | PlayerX -> playerXS
+                    | PlayerO -> playerOS
+              yield str "wins!" ]
+
     let gameOver onRestart gameOver' =
         div [ ClassName "GameOver" ]
             [ img [ ClassName "GameOver__Image"
+                    OnClick (fun _ -> onRestart ())
                     Src restartImage
-                    OnClick (fun _ -> onRestart())
                     Alt "Restart" ]
               p [ ClassName "GameOver__Text" ]
                 [ match gameOver' with
-                  | Draw -> yield str "It's a draw"
+                  | Draw ->
+                    yield str "It's a draw"
                   | Winner player ->
-                    yield span []
-                        [ yield str "Player"
-                          yield match player with
-                                | PlayerX -> playerXS
-                                | PlayerO -> playerOS
-                          yield str "wins!" ] ] ]
-
+                    yield gameOverPlayer player ] ]
     let prefetchImages =
         [ playerOImage; playerXImage ]
         |> List.map (fun img -> link [ Rel "prefetch"; Href img ])
