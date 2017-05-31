@@ -40,13 +40,15 @@ module State =
         | PlayerO -> PlayerX
 
     let nextMove (Position (x, y)) model =
-        let newBoard = GameLogic.updateBoard (x, y) (Player model.currentPlayer) model.board
-        let nextPlayer = nextPlayer model.currentPlayer
-        let newGameState = GameLogic.getGameState newBoard
-        { model with
-            board = newBoard
-            currentPlayer = nextPlayer
-            gameState = newGameState }
+        if GameLogic.canUpdateBoard (x, y) model.board then
+            let newBoard = GameLogic.updateBoard (x, y) (Player model.currentPlayer) model.board
+            let nextPlayer = nextPlayer model.currentPlayer
+            let newGameState = GameLogic.getGameState newBoard
+            { model with
+                board = newBoard
+                currentPlayer = nextPlayer
+                gameState = newGameState }
+        else model
 
     let update msg model =
         match msg with
