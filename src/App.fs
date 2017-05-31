@@ -6,7 +6,6 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import.React
 open GameLogic
-open Fable.Import.Recompose
 
 importAll "./App.scss"
 let playerXImage = importAll "./assets/PlayerX.svg"
