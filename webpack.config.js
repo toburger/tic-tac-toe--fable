@@ -1,5 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 function resolve(filePath) {
   return path.join(__dirname, filePath)
@@ -15,12 +16,17 @@ module.exports = {
   entry: resolve('./tic-tac-toe--fable.fsproj'),
   output: {
     filename: 'bundle.js',
-    path: resolve('./public'),
+    path: resolve('./build'),
   },
   devServer: {
     contentBase: resolve('./public'),
     port: 8080
- },
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: './public' }
+    ])
+  ],
   module: {
     rules: [
       {
