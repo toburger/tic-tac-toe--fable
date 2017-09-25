@@ -1,22 +1,29 @@
 var path = require("path");
 var webpack = require("webpack");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
+var fableUtils = require("fable-utils");
 
 function resolve(filePath) {
   return path.join(__dirname, filePath)
 }
 
-var babelOptions = {
-  presets: [["es2015", {"modules": false}]],
+var babelOptions = fableUtils.resolveBabelOptions({
+  presets: [["es2015", { "modules": false }]],
   plugins: ["transform-runtime"]
-}
+});
+
+var isProduction = process.argv.indexOf("-p") >= 0;
+console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
 
 module.exports = {
   devtool: "source-map",
-  entry: resolve('./tic-tac-toe--fable.fsproj'),
+  entry: resolve('./src/tic-tac-toe--fable.fsproj'),
   output: {
     filename: 'bundle.js',
     path: resolve('./build'),
+  },
+  resolve: {
+    modules: [resolve("./node_modules/")]
   },
   devServer: {
     contentBase: resolve('./public'),

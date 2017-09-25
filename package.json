@@ -15,8 +15,7 @@
     "fable": "^1.0.1",
     "fable-core": "^1.0.0-narumi-905",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "recompose": "^0.23.1"
+    "react-dom": "^15.5.4"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
@@ -34,7 +33,7 @@
     "node-sass": "^4.5.2",
     "sass-loader": "^6.0.4",
     "style-loader": "^0.18.1",
-    "webpack": "^2.2.1",
+    "webpack": "^3.6.0",
     "webpack-dev-server": "^2.4.2"
   }
 }
