@@ -17,9 +17,10 @@ type Model =
       currentPlayer: Player
       gameState: GameState }
 
-type Position = Position of int * int with
-    override self.ToString() =
-        let (Position (x, y)) = self
+type Position = Position of int * int
+
+module Position =
+    let toString (Position (x, y)) =
         sprintf "%i-%i" x y
 
 type Msg =
@@ -40,7 +41,8 @@ module State =
 
     let nextMove (Position (x, y)) model =
         if GameLogic.canUpdateBoard (x, y) model.board then
-            let newBoard = GameLogic.updateBoard (x, y) (Player model.currentPlayer) model.board
+            let newBoard =
+                GameLogic.updateBoard (x, y) (Player model.currentPlayer) model.board
             let nextPlayer = nextPlayer model.currentPlayer
             let newGameState = GameLogic.getGameState newBoard
             { model with
@@ -72,14 +74,20 @@ module View =
 
     let cell (onMove: OnMove) position (cell': Cell) =
         button
-            [ ClassName "Cell"; OnClick (fun _ -> onMove position); Key (string position) ]
+            [ ClassName "Cell"
+              OnClick (fun _ -> onMove position)
+              Key (Position.toString position) ]
             [ dispatchCellValue cell' ]
 
     let row onMove x row' =
-        div [ ClassName "Board__Row"; Key (string x) ] (List.mapi (fun y -> cell onMove (Position (x, y))) row')
+        div [ ClassName "Board__Row"
+              Key (string x) ]
+            (List.mapi (fun y ->
+                cell onMove (Position (x, y))) row')
 
     let board onMove (board': Board) =
-        div [ ClassName "Board" ] (List.mapi (row onMove) board')
+        div [ ClassName "Board" ]
+            (List.mapi (row onMove) board')
 
     let currentPlayer currentPlayer =
         div [ ClassName "CurrentPlayer" ]
@@ -116,7 +124,8 @@ module View =
                     yield gameOverPlayer player ] ]
     let prefetchImages =
         [ playerOImage; playerXImage ]
-        |> List.map (fun img -> link [ Rel "prefetch"; Href img ])
+        |> List.map (fun img -> link [ Rel "prefetch"
+                                       Href img ])
 
     let root model dispatch =
         div [ ClassName "App" ]
@@ -129,7 +138,11 @@ module View =
 
 open Elmish
 open Elmish.React
+open Elmish.Debug
 
 Program.mkSimple State.init State.update View.root
 |> Program.withReact "root"
+#if DEBUG
+|> Program.withDebugger
+#endif
 |> Program.run
