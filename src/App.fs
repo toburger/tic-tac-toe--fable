@@ -18,9 +18,8 @@ type Model =
       gameState: GameState }
 
 type Position = Position of int * int
-
-module Position =
-    let toString (Position (x, y)) =
+with override self.ToString() =
+        let (Position (x, y)) = self
         sprintf "%i-%i" x y
 
 type Msg =
@@ -76,7 +75,7 @@ module View =
         button
             [ ClassName "Cell"
               OnClick (fun _ -> onMove position)
-              Key (Position.toString position) ]
+              Key (string position) ]
             [ dispatchCellValue cell' ]
 
     let row onMove x row' =
