@@ -1,13 +1,11 @@
 module App
 
-open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import.React
 open GameLogic
 
-importAll "./App.scss"
+importSideEffects "./App.scss"
 let playerXImage = importAll "./assets/PlayerX.svg"
 let playerOImage = importAll "./assets/PlayerO.svg"
 let restartImage = importAll "./assets/restart.png"
