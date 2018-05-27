@@ -1,18 +1,22 @@
 module GameLogic
 
+[<Fable.Core.Pojo>]
 type Player =
     PlayerX | PlayerO
 
+[<Fable.Core.Pojo>]
 type Cell =
     | Empty
     | Player of Player
 
 type Board = Cell list list
 
+[<Fable.Core.Pojo>]
 type GameOver =
     | Winner of Player
     | Draw
 
+[<Fable.Core.Pojo>]
 type GameState =
     | GameOver of GameOver
     | Continue

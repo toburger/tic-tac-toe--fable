@@ -10,6 +10,7 @@ let playerXImage = importAll "./assets/PlayerX.svg"
 let playerOImage = importAll "./assets/PlayerO.svg"
 let restartImage = importAll "./assets/restart.png"
 
+[<Fable.Core.Pojo>]
 type Model =
     { board: Board
       currentPlayer: Player
@@ -20,6 +21,7 @@ with override self.ToString() =
         let (Position (x, y)) = self
         sprintf "%i-%i" x y
 
+[<Fable.Core.Pojo>]
 type Msg =
     | Move of Position
     | Restart
