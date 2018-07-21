@@ -70,10 +70,7 @@ module.exports = {
       },
       {
          test: /\.svg|\.png$/,
-         loader: 'file-loader',
-         query: {
-           name: 'static/media/[name].[hash:8].[ext]'
-         }
+         use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
       }
     ]
   }
