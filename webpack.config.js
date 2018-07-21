@@ -69,7 +69,7 @@ module.exports = {
         ]
       },
       {
-         test: /\.svg|\.png$/,
+         test: /\.(svg|png)(\?[a-z0-9=&.]+)?$/,
          use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
       }
     ]
