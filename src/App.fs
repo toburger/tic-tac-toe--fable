@@ -119,19 +119,14 @@ module View =
                     yield str "It's a draw"
                   | Winner player ->
                     yield gameOverPlayer player ] ]
-    let prefetchImages =
-        [ playerOImage; playerXImage ]
-        |> List.map (fun img -> link [ Rel "prefetch"
-                                       Href img ])
 
     let root model dispatch =
         div [ ClassName "App" ]
-            [ yield! prefetchImages
-              yield match model.gameState with
-                    | Continue ->
-                        game (dispatch << Move) model.board model.currentPlayer
-                    | GameOver gameOver' ->
-                        gameOver (fun _ -> dispatch Restart) gameOver' ]
+            [ match model.gameState with
+              | Continue ->
+                  yield game (dispatch << Move) model.board model.currentPlayer
+              | GameOver gameOver' ->
+                  yield gameOver (fun _ -> dispatch Restart) gameOver' ]
 
 open Elmish
 open Elmish.React
