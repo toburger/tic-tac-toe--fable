@@ -5,6 +5,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open GameLogic
 
+importSideEffects "@babel/polyfill"
 importSideEffects "./App.scss"
 let playerXImage = importAll "./assets/PlayerX.svg"
 let playerOImage = importAll "./assets/PlayerO.svg"
