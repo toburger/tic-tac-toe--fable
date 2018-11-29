@@ -4,54 +4,57 @@ var MinifyPlugin = require("terser-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 function resolve(filePath) {
-  return path.join(__dirname, filePath)
+  return path.join(__dirname, filePath);
 }
 
 var babelOptions = {
-    presets: [
-        ["@babel/preset-env", {
-            "targets": {
-                "browsers": ["last 2 versions"]
-            },
-            "modules": false
-        }]
+  presets: [
+    [
+      "@babel/preset-env",
+      {
+        targets: {
+          browsers: ["last 2 versions"]
+        },
+        modules: false,
+        useBuiltIns: "usage"
+      }
     ]
+  ],
+  plugins: ["@babel/plugin-transform-runtime"]
 };
 
 var isProduction = process.argv.indexOf("-p") >= 0;
-console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
+console.log(
+  "Bundling for " + (isProduction ? "production" : "development") + "..."
+);
 
 module.exports = {
   devtool: "source-map",
-  entry: resolve('./src/tic-tac-toe--fable.fsproj'),
+  entry: resolve("./src/tic-tac-toe--fable.fsproj"),
   output: {
-    filename: '[name].js',
-    path: resolve('./build'),
+    filename: "[name].js",
+    path: resolve("./build")
   },
   resolve: {
     modules: [resolve("./node_modules/")]
   },
   devServer: {
-    contentBase: resolve('./public'),
+    contentBase: resolve("./public"),
     port: 8080
   },
   optimization: {
     splitChunks: {
-        cacheGroups: {
-            commons: {
-                test: /node_modules/,
-                name: "vendors",
-                chunks: "all"
-            }
+      cacheGroups: {
+        commons: {
+          test: /node_modules/,
+          name: "vendors",
+          chunks: "all"
         }
+      }
     },
     minimizer: isProduction ? [new MinifyPlugin()] : []
   },
-  plugins: [
-    new CopyWebpackPlugin([
-      { from: './public' }
-    ])
-  ],
+  plugins: [new CopyWebpackPlugin([{ from: "./public" }])],
   module: {
     rules: [
       {
@@ -65,21 +68,17 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules[\\\/](?!fable-)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: babelOptions
-        },
+        }
       },
       {
         test: /\.s(a|c)ss$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
-        ]
+        use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
-         test: /\.(svg|png)(\?[a-z0-9=&.]+)?$/,
-         use: 'base64-inline-loader?limit=1000&name=[name].[ext]'
+        test: /\.(svg|png)(\?[a-z0-9=&.]+)?$/,
+        use: "base64-inline-loader?limit=1000&name=[name].[ext]"
       }
     ]
   }
