@@ -1,7 +1,6 @@
 source https://www.nuget.org/api/v2
 storage: none
 
-clitool dotnet-fable
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
