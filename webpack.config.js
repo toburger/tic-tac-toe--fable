@@ -1,5 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
+var MinifyPlugin = require("terser-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 function resolve(filePath) {
@@ -24,7 +25,7 @@ module.exports = {
   devtool: "source-map",
   entry: resolve('./src/tic-tac-toe--fable.fsproj'),
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: resolve('./build'),
   },
   resolve: {
@@ -33,6 +34,18 @@ module.exports = {
   devServer: {
     contentBase: resolve('./public'),
     port: 8080
+  },
+  optimization: {
+    splitChunks: {
+        cacheGroups: {
+            commons: {
+                test: /node_modules/,
+                name: "vendors",
+                chunks: "all"
+            }
+        }
+    },
+    minimizer: isProduction ? [new MinifyPlugin()] : []
   },
   plugins: [
     new CopyWebpackPlugin([
