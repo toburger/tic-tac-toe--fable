@@ -16,7 +16,8 @@ var babelOptions = {
           browsers: ["last 2 versions"]
         },
         modules: false,
-        useBuiltIns: "usage"
+        useBuiltIns: "usage",
+	corejs: "3.0.0"
       }
     ]
   ],
