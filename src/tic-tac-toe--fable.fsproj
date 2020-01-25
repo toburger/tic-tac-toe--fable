@@ -3,7 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="List.fs" />
     <Compile Include="GameLogic.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
