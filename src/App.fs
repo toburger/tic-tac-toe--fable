@@ -1,8 +1,8 @@
 module App
 
 open Fable.Core.JsInterop
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open GameLogic
 
 importSideEffects "./App.scss"
@@ -133,7 +133,7 @@ open Elmish.React
 open Elmish.Debug
 
 Program.mkSimple State.init State.update View.root
-|> Program.withReact "root"
+|> Program.withReactBatched "root"
 #if DEBUG
 |> Program.withDebugger
 #endif
