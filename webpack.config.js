@@ -13,15 +13,15 @@ var babelOptions = {
       "@babel/preset-env",
       {
         targets: {
-          browsers: ["last 2 versions"]
+          browsers: ["last 2 versions"],
         },
         modules: false,
         useBuiltIns: "usage",
-	corejs: "3.0.0"
-      }
-    ]
+        corejs: "3.0.0",
+      },
+    ],
   ],
-  plugins: ["@babel/plugin-transform-runtime"]
+  plugins: ["@babel/plugin-transform-runtime"],
 };
 
 var isProduction = process.argv.indexOf("-p") >= 0;
@@ -34,14 +34,14 @@ module.exports = {
   entry: resolve("./src/tic-tac-toe--fable.fsproj"),
   output: {
     filename: "[name].js",
-    path: resolve("./build")
+    path: resolve("./build"),
   },
   resolve: {
-    modules: [resolve("./node_modules/")]
+    modules: [resolve("./node_modules/")],
   },
   devServer: {
     contentBase: resolve("./public"),
-    port: 8080
+    port: 8080,
   },
   optimization: {
     splitChunks: {
@@ -49,38 +49,38 @@ module.exports = {
         commons: {
           test: /node_modules/,
           name: "vendors",
-          chunks: "all"
-        }
-      }
+          chunks: "all",
+        },
+      },
     },
-    minimizer: isProduction ? [new MinifyPlugin()] : []
+    minimizer: isProduction ? [new MinifyPlugin()] : [],
   },
-  plugins: [new CopyWebpackPlugin([{ from: "./public" }])],
+  plugins: [new CopyWebpackPlugin({ patterns: [{ from: "./public" }] })],
   module: {
     rules: [
       {
         test: /\.fs(x|proj)?$/,
         use: {
           loader: "fable-loader",
-          options: { babel: babelOptions }
-        }
+          options: { babel: babelOptions },
+        },
       },
       {
         test: /\.js$/,
         exclude: /node_modules[\\\/](?!fable-)/,
         use: {
           loader: "babel-loader",
-          options: babelOptions
-        }
+          options: babelOptions,
+        },
       },
       {
         test: /\.s(a|c)ss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.(svg|png)(\?[a-z0-9=&.]+)?$/,
-        use: "base64-inline-loader?limit=1000&name=[name].[ext]"
-      }
-    ]
-  }
+        use: "base64-inline-loader?limit=1000&name=[name].[ext]",
+      },
+    ],
+  },
 };
