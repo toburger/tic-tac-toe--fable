@@ -34,7 +34,7 @@ module.exports = {
   entry: resolve("./src/tic-tac-toe--fable.fsproj"),
   output: {
     filename: "[name].js",
-    path: resolve("./build"),
+    path: resolve("./dist"),
   },
   resolve: {
     modules: [resolve("./node_modules/")],
