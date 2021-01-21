@@ -130,11 +130,7 @@ module View =
 
 open Elmish
 open Elmish.React
-// open Elmish.Debug
 
 Program.mkSimple State.init State.update View.root
 |> Program.withReactBatched "root"
-#if DEBUG
-// |> Program.withDebugger
-#endif
 |> Program.run
