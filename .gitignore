@@ -7,3 +7,4 @@ packages/
 paket-files/
 .ionide/
 .cache/
+src/**/*.fs.js
