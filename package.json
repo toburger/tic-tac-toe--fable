@@ -3,7 +3,7 @@
   "name": "tic-tac-toe--fable",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "postinstall": "dotnet tool restore",
     "start": "dotnet fable watch src --run parcel index.html watch"
