@@ -1,8 +1,8 @@
 ## Build and running the app
 
-1. Install npm dependencies: `yarn`
-4. Start webpack dev server: `yarn start`
-5. In your browser, open: http://localhost:8080/
+1. Install npm dependencies: `npm install`
+4. Start webpack dev server: `npm start`
+5. In your browser, open: http://localhost:1234/
 
 Any modification you do to the F# code will be reflected in the web page after saving.
 

@@ -6,9 +6,9 @@ open Fable.React.Props
 open GameLogic
 
 importSideEffects "./App.scss"
-let playerXImage = importAll "./assets/PlayerX.svg"
-let playerOImage = importAll "./assets/PlayerO.svg"
-let restartImage = importAll "./assets/restart.png"
+let playerXImage = importDefault "/assets/PlayerX.svg"
+let playerOImage = importDefault "/assets/PlayerO.svg"
+let restartImage = importDefault "/assets/restart.png"
 
 type Model =
     { board: Board
@@ -130,11 +130,11 @@ module View =
 
 open Elmish
 open Elmish.React
-open Elmish.Debug
+// open Elmish.Debug
 
 Program.mkSimple State.init State.update View.root
 |> Program.withReactBatched "root"
 #if DEBUG
-|> Program.withDebugger
+// |> Program.withDebugger
 #endif
 |> Program.run
